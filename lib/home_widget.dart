@@ -3,6 +3,8 @@ import 'homepage_widget.dart';
 import 'search_widget.dart';
 import 'profile_widget.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -27,7 +29,8 @@ class _HomeState extends State<Home> {
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
-        currentIndex: _currentIndex, // this will be set when a new tab is tapped
+        currentIndex:
+            _currentIndex, // this will be set when a new tab is tapped
         items: [
           BottomNavigationBarItem(
             icon: new Icon(Icons.home),
@@ -38,9 +41,7 @@ class _HomeState extends State<Home> {
             title: new Text('Search'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Profile')
-          )
+              icon: Icon(Icons.person), title: Text('Profile'))
         ],
       ),
     );
@@ -48,7 +49,7 @@ class _HomeState extends State<Home> {
 
   void onTabTapped(int index) {
     setState(() {
-        _currentIndex = index;
+      _currentIndex = index;
     });
   }
 }
