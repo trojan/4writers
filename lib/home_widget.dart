@@ -3,8 +3,6 @@ import 'homepage_widget.dart';
 import 'search_widget.dart';
 import 'profile_widget.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {

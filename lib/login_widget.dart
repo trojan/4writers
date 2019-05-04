@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ProfileWidget extends StatelessWidget {
+class LoginWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red
+    return MaterialApp(
+
     );
   }
 }

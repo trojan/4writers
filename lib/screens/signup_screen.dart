@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+
+  String _email;
+  String _nickname;
+  String _password;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +27,10 @@ class SignUpScreen extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               validator: (text) {
                 if (text.isEmpty || !text.contains("@"))
-                  return "E-mail inválido!";
+                return "E-mail inválido!";
+              },
+              onSaved: (text) {
+                _email = text;
               },
             ),
             SizedBox(
@@ -36,6 +44,9 @@ class SignUpScreen extends StatelessWidget {
               validator: (text) {
                 if (text.isEmpty) return "Already beign used!";
               },
+              onSaved: (text) {
+                _nickname = text;
+              },
             ),
             SizedBox(
               height: 16.0,
@@ -47,6 +58,9 @@ class SignUpScreen extends StatelessWidget {
               obscureText: true,
               validator: (text) {
                 if (text.isEmpty || text.length < 6) return "Senha inválida";
+              },
+              onSaved: (text) {
+                _password = text;
               },
             ),
             SizedBox(
@@ -64,7 +78,12 @@ class SignUpScreen extends StatelessWidget {
                 textColor: Colors.white,
                 color: Theme.of(context).primaryColor,
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {}
+                  if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
+ 
+                    Firestore.instance.collection('users').document()
+                    .setData({ 'name': _nickname, 'email': _email, 'password': _password });
+                  }
                 },
               ),
             )
