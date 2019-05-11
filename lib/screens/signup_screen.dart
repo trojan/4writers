@@ -102,7 +102,8 @@ class SignUpScreen extends StatelessWidget {
                     _formKey.currentState.save();
 
                     // Stores the user and goes to the Home page.
-                    storeData().then((_) {
+                    storeData()
+                    .then((_) {
                         Route route = MaterialPageRoute(builder: (context) => Home());
                         Navigator.push(context, route);
                     })

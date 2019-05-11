@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../home_widget.dart';
+import '../globals.dart' as globals;
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+
+  String _email;
+  String _password;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +31,9 @@ class LoginScreen extends StatelessWidget {
                 if (text.isEmpty || !text.contains("@"))
                   return "E-mail inválido!";
               },
+              onSaved: (text) {
+                _email = text;
+              },
             ),
             SizedBox(
               height: 16.0,
@@ -40,6 +49,9 @@ class LoginScreen extends StatelessWidget {
               obscureText: true,
               validator: (text) {
                 if (text.isEmpty || text.length < 6) return "Senha inválida";
+              },
+              onSaved: (text) {
+                _password = text;
               },
             ),
             Align(
@@ -68,7 +80,26 @@ class LoginScreen extends StatelessWidget {
                 textColor: Colors.white,
                 color: Theme.of(context).primaryColor,
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {}
+                  if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
+
+                    Firestore.instance
+                    .collection('users')
+                    .where('email', isEqualTo: this._email)
+                    .where('password', isEqualTo: this._password)
+                    .snapshots()
+                    .listen((data) => data.documents.forEach((doc) {
+                          if (doc["email"] != null) {
+                            globals.isLoggedIn = true;
+                            globals.username   = doc["name"];
+                            globals.email      = doc["email"];
+
+                            Route route = MaterialPageRoute(builder: (context) => Home());
+                            Navigator.push(context, route);
+                          }
+                          else print("wrong password");
+                    }));
+                  }
                 },
               ),
             ),

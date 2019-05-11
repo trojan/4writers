@@ -27,8 +27,7 @@ class _HomeState extends State<Home> {
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
-        currentIndex:
-            _currentIndex, // this will be set when a new tab is tapped
+        currentIndex: _currentIndex, // this will be set when a new tab is tapped
         items: [
           BottomNavigationBarItem(
             icon: new Icon(Icons.home),
@@ -39,7 +38,8 @@ class _HomeState extends State<Home> {
             title: new Text('Search'),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text('Profile'))
+            icon: Icon(Icons.person),
+            title: Text('Profile')),
         ],
       ),
     );
