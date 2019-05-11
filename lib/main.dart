@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:four_writers/screens/login_screen.dart';
-import 'package:four_writers/screens/homepage.dart';
-import 'package:four_writers/screens/signup_screen.dart';
-import 'home_widget.dart';
+import 'screens/login.dart';
 
 void main() => runApp(App());
 
@@ -16,7 +13,7 @@ class App extends StatelessWidget {
         primaryColor: Color.fromARGB(255, 4, 125, 141),
       ),
       debugShowCheckedModeBanner: false,
-      home: SignUpScreen(),
+      home: Login(),
     );
   }
 }

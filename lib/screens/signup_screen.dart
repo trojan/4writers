@@ -22,18 +22,19 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Create Account"),
-        centerTitle: true,
-      ),
       body: Form(
         key: _formKey,
         child: ListView(
           padding: EdgeInsets.all(16.0),
           children: <Widget>[
+            _showLogo(),
             TextFormField(
               decoration: InputDecoration(
                 hintText: "Email",
+                icon: new Icon(
+                  Icons.mail,
+                  color: Colors.grey,
+                ),
               ),
               keyboardType: TextInputType.emailAddress,
               validator: (text) {
@@ -50,6 +51,10 @@ class SignUpScreen extends StatelessWidget {
             TextFormField(
               decoration: InputDecoration(
                 hintText: "NickName",
+                icon: new Icon(
+                  Icons.recent_actors,
+                  color: Colors.grey,
+                ),
               ),
               keyboardType: TextInputType.emailAddress,
               validator: (text) {
@@ -65,6 +70,10 @@ class SignUpScreen extends StatelessWidget {
             TextFormField(
               decoration: InputDecoration(
                 hintText: "Senha",
+                icon: new Icon(
+                  Icons.lock,
+                  color: Colors.grey,
+                ),
               ),
               obscureText: true,
               validator: (text) {
@@ -98,19 +107,25 @@ class SignUpScreen extends StatelessWidget {
                         Navigator.push(context, route);
                     })
                     .catchError((err) => print(err));
-                    //storeData().then((_) => {
-                    //    Route route = MaterialPageRoute(builder: (context) => HomepageWidget());
-                    //    Navigator.push(context, route);
-                    //})
-                    //.catchError((err) => print(err));
- 
-                    //await Firestore.instance.collection('users').document()
-                    //.setData({ 'name': _nickname, 'email': _email, 'password': _password });
                   }
                 },
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _showLogo() {
+    return new Hero(
+      tag: 'hero',
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+        child: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          radius: 100.0,
+          child: Image.asset('assets/logo.png'),
         ),
       ),
     );
