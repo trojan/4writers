@@ -12,13 +12,17 @@ class HomepageWidget extends StatelessWidget {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting: return new Text('Loading...');
           default:
-          return new ListView(
-            children: snapshot.data.documents.map((DocumentSnapshot document) {
-                return new ListTile(
-                  title: new Text(document['title']),
-                  subtitle: new Text(document['script']),
-                );
-            }).toList(),
+          return new Scaffold(
+            body: ListView(
+              children: snapshot.data.documents.map((DocumentSnapshot document) {
+                  return new ListTile(
+                    leading: FlutterLogo(size: 72.0),
+                    title: new Text(document['title']),
+                    subtitle: new Text(document['script']),
+                    isThreeLine: true,
+                  );
+              }).toList()
+            )
           );
         }
       },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../home_widget.dart';
 
 class SignUpScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -7,6 +8,16 @@ class SignUpScreen extends StatelessWidget {
   String _email;
   String _nickname;
   String _password;
+
+  // Stores the user in the firebase database.
+  Future<void> storeData() async {
+    try {
+      await Firestore.instance.collection('users').document()
+      .setData({ 'name': _nickname, 'email': _email, 'password': _password });
+    } catch (e) {
+      throw("Couldn't store the data, please check your internet connection.");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +91,21 @@ class SignUpScreen extends StatelessWidget {
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
+
+                    // Stores the user and goes to the Home page.
+                    storeData().then((_) {
+                        Route route = MaterialPageRoute(builder: (context) => Home());
+                        Navigator.push(context, route);
+                    })
+                    .catchError((err) => print(err));
+                    //storeData().then((_) => {
+                    //    Route route = MaterialPageRoute(builder: (context) => HomepageWidget());
+                    //    Navigator.push(context, route);
+                    //})
+                    //.catchError((err) => print(err));
  
-                    Firestore.instance.collection('users').document()
-                    .setData({ 'name': _nickname, 'email': _email, 'password': _password });
+                    //await Firestore.instance.collection('users').document()
+                    //.setData({ 'name': _nickname, 'email': _email, 'password': _password });
                   }
                 },
               ),
